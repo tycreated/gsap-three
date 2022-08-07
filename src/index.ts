@@ -1,7 +1,4 @@
-import { greetUser } from '$utils/greet';
+import { gsap } from 'gsap';
 
-window.Webflow ||= [];
-window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
-});
+gsap.to('.linkbase', { xPercent: 100, duration: 3, ease: 'power2.out' })
+
