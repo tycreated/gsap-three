@@ -1,29 +1,101 @@
 import { gsap } from "gsap";
-import { Flip } from "gsap/Flip";
-import { Draggable } from "gsap/Draggable";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(Flip, Draggable);
+gsap.registerPlugin(ScrollTrigger);
 
-const bars = gsap.utils.toArray('.box'),
-      container1 = document.querySelector('.container1'),
-      container2 = document.querySelector('.container2');
-
-document.querySelector('.linkbase').addEventListener('click', () => {
-  // Get the initial state
-  const state = Flip.getState(bars);
-  
-
-  //Switch the parent
-  let newContainer = bars[0].parentElement === container1 ? container2 : container1;
-  bars.forEach(bar => newContainer.appendChild(bar));
-  
-  // Do the animation!
-  Flip.from(state, {
-    // Optional properties related to HOW it's transitioned
-    duration: 0.8,
-    stagger: 0.05,
-    absolute: true,
-    scale: true,
-    ease: "Power1.out"
+// Scroll into view
+function lineAnimation() {
+  let tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".timeline_component",
+      start: "top center",
+      end: "bottom top",
+      toggleActions: "restart none none reverse"
+    }
   });
+  tl.to(".page-frame_cutout", {
+    width: "40%",
+    ease: "power1.out",
+    duration: 1.4
+  });
+    tl.to(".page-frame_scroll", {
+    height: "0%",
+    ease: "power3.out",
+    duration: 1.1
+  },
+  0.5
+  );
+}
+lineAnimation();
+
+let cmsItem = $(".timeline_list-item");
+let benefit = $(".sponsor-card_base");
+let zIndex = 1;
+
+$(".timeline_trigger-item").each(function (index) {
+  let itemTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: $(this),
+      toggleActions: "restart none none reverse"
+    }
+  });
+  if (index > 0) {
+    itemTimeline.from(cmsItem.eq(index), {
+      opacity: 0,
+      duration: 1.5
+    });
+  }
+      if (index > 0) {
+    itemTimeline.from(benefit.eq(index), {
+      scale: 1,
+      opacity: 1,
+      duration: 1.5
+    });
+  }
+  // Text timeline
+  let textTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: $(this),
+      start: "center bottom",
+      end: "bottom top",
+      scrub: 1,
+      onEnter: () => {
+        zIndex = zIndex + 1;
+        cmsItem.eq(index).css("z-index", zIndex);
+      },
+      onEnterBack: () => {
+        zIndex = zIndex + 1;
+        cmsItem.eq(index).css("z-index", zIndex);
+      }
+    }
+  });
+  textTimeline.from(cmsItem.eq(index).find(".heading-large .line, .text-size-regular .line"), {
+    y: "100%",
+    opacity: 0,
+    stagger: { each: 0.15 },
+    ease: "power2.out",
+    duration: 1.5
+
+  });
+  if (index < cmsItem.last().index()) {
+    textTimeline.to(cmsItem.eq(index).find(".heading-large .line, .text-size-regular .line"), {
+    opacity: 0,
+    scale: 0.92,
+    stagger: { each: 0.15 },
+    ease: "power2.out",
+    duration: 1.5
+    });
+  }
+   textTimeline.to({}, { duration: 1.5 });
+   
+    if (index < benefit.last().index()) {
+  textTimeline.to(benefit.eq(index).find(".card-mover"), {
+    scale: 1.15,
+    opacity: 0,
+    ease: "power1.out",
+    duration: 1.5
+   });
+  }
+  textTimeline.to({}, { duration: 1.5 });
+
 });
