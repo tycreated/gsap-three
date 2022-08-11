@@ -1,6 +1,6 @@
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Draggable } from 'gsap/Draggable';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Draggable } from "gsap/Draggable";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -15,7 +15,7 @@ function lineAnimation() {
     }
   });
   tl.to(".page-frame_cutout", {
-    width: '40%',
+    width: "40%",
     ease: "power1.out",
     duration: 1.4
   });
@@ -295,12 +295,12 @@ function horizontalLoop(items, config) {
         let time = -(value * ratio) * tl.duration(),
             wrappedTime = timeWrap(time),
             snapTime = times[getClosest(times, wrappedTime, tl.duration())],
-            dif = snapTime - wrappedTime;
+          dif = snapTime - wrappedTime;
         Math.abs(dif) > tl.duration() / 2 && (dif += dif < 0 ? tl.duration() : -tl.duration());
         return (time + dif) / tl.duration() / -ratio;
       },
       onRelease: syncIndex,
-      onThrowComplete: syncIndex
+      onThrowComplete: syncIndex,
     })[0];
     tl.draggable = draggable;
   }
