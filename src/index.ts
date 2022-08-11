@@ -1,5 +1,5 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +14,7 @@ function lineAnimation() {
     }
   });
   tl.to(".page-frame_cutout", {
-    width: "40%",
+    width: '40%',
     ease: "power1.out",
     duration: 1.4
   });
