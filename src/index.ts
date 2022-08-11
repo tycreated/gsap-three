@@ -4,8 +4,7 @@
 
 <script src="/gsap-three/InertiaPlugin.min.js"></script>
 
-
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin);
 
 // Scroll into view
 function lineAnimation() {
