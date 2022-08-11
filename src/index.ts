@@ -1,10 +1,9 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
-import { InertiaPlugin } from 'gsap/InertiaPlugin';
 
-gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin);
-<script>
+gsap.registerPlugin(ScrollTrigger, Draggable);
+
 // Scroll into view
 function lineAnimation() {
   let tl = gsap.timeline({
@@ -102,10 +101,6 @@ $(".timeline_trigger-item").each(function (index) {
 
 });
 
-</script>
-
-
-<script>
 
 
 //dragging slider
@@ -313,5 +308,3 @@ function horizontalLoop(items, config) {
   onChange && onChange(items[curIndex], curIndex);
 	return tl;
 }
-
-</script>
